@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+	
+
+	<link href="https://fonts.googleapis.com/css?family=Bree+Serif&display=swap" rel="stylesheet">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
+	
+	
+	{% block cssinclude %} {% endblock %}
+	
+</head>
+<body>
+
+
+	<div id="main_container" class="container">
+	
+		{% if user %}
+			<nav class="navbar-header navbar navbar-dark py-0 navbar-expand-lg py-md-0" >
+		
+				<ul class="navbar-nav">
+				
+					<!-- <li class="nav-item py-0" id="home"><a class="nav-link" href="/">Početna</a></li> -->
+					
+					<li class="nav-item py-0" id="suggestions"><a class="nav-link" href="/FeedProvider/show">Predlozi</a></li>
+					<li class="nav-item py-0" id="profile"><a class="nav-link" href="/profile/show">Profil</a></li>
+					<li class="nav-item py-0" id="logoff"><a class="nav-link" href="/logout">Odjava</a></li>
+					
+						{% if user.admin_id %}
+						
+					<li class="nav-item py-0" id="admin_panel"><a class="nav-link" href="/admin/show">Admin panel</a></li>
+					
+						{% endif %}
+					
+				
+				</ul>
+		
+			</nav>
+			
+		{% else %}
+		
+		
+			<h1 id="app_title" style="color: #000000c9; text-align: start; font-size: 3rem;"> Nastavnički predlozi </h1>
+	
+	
+		{% endif %}
+
+		{% for message in flash_messages %}
+		
+			<div class="alert alert-{{ message.type }}">
+				{{ message.body }}
+			</div>
+		
+		{% endfor %}
+
+		{% block body %}
+		{% endblock %}
+	
+	
+	</div>
+
+	
+	
+
+  
+  
+  {% block footer %}
+		<script
+	  src="/js/commons/libs/jquery-3.4.1.min.js"></script>
+	  <script
+	  src="/js/commons/libs/jquery.validate.min.js"></script>
+	  
+		<script src="/js/commons/libs/popper.min.js" > </script>
+		<script
+	  src="/js/commons/libs/bootstrap.min.js"></script>
+
+		
+	  <script>
+	  
+	  
+			jQuery.extend(jQuery.validator.messages, {
+						required: "Prazno polje.",
+						equalTo: "Ne podudaraju se.",
+						email: "Nevalidna adresa.",
+						minlength: jQuery.validator.format("Unesi barem {0} karaktera."),
+					});
+					
+			$('#app_title').click(function() {
+			
+				window.open("/login", "_self");
+			
+			});
+	  
+	  </script>
+  
+	<div class="footer-after"></div>
+  {% endblock %}
+</body>
+</html>

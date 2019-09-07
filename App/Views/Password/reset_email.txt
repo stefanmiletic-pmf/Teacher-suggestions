@@ -1,0 +1,5 @@
+﻿Poštovani korisnice,\n
+Dobili smo zahtev za promenu šifre na Vašem nalogu.\n
+Ukoliko niste zahtevali istu, molimo Vas da zanemarite ovaj mejl.\n
+Klikni ovde da resetujes šifru: {{ url }} \n
+U slučaju spam-a obratite se administratoru: admin@pmf.edu

@@ -1,0 +1,130 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Prijava{% endblock %}
+
+{% block cssinclude %} 
+
+	<style>
+	
+		body {
+		
+			background: #112c6a;
+			padding-top: 3rem;
+		
+		}
+		
+		#app_title {
+			color: white !important;
+		}
+	
+	</style>
+
+{% endblock %}
+
+{% block body %}
+
+
+  <div id="border"></div>
+	
+	<div style="height: 4.5rem;color: white;">
+    <h1 style="float: left">Prijava.</h1>
+			<a href="/Signup" style="margin-top: 1.4rem;
+									margin-left: 3px;
+									display: inline-block">
+									Novi nalog?</a>
+	</div>
+
+	<form method='post' action="/login/create" id="formLogin">
+		<div class="form-group">
+			<input type="email" id="inputEmail" name="email" placeholder="Adresa"  value="{{ email }}" autofocus class="form-control" />
+		</div>
+		<div class="form-group">
+			<input type="password" id="inputPassword" name="password" placeholder="Šifra" class="form-control" />
+		</div>
+		
+		<div class="checkbox form-group">
+		
+			<label>
+			
+				<input type="checkbox" name="remember_me"
+					{% if remember_me %} checked="checked" {% endif %}/> <span style="color: white;"> Zapamti me. </span>
+			
+			</label>
+		
+		</div>
+		
+		<div>
+			<button type="submit" class="btn btn-primary" style="float:left">Prijavi se</button>
+			<a onclick="forgottenPassword()" href="#" style="margin-left: 0.2rem;   line-height: 3rem;">Nova šifra?</a>
+		</div>
+	</form>
+{% endblock %}
+
+{% block footer %}
+
+    {{ parent() }}
+	<script src="/js/commons/libs/hideShowPassword.min.js"></script>
+
+	<script>
+
+
+	function forgottenPassword() {
+		
+		var url = "";
+		
+		if ( $("#inputEmail").val() === '' )
+			url = "/password/forgot";
+		else
+			url = "/password/forgot?email=" + $("#inputEmail").val();
+	
+	
+		window.open(url, "_self" );
+	
+	}
+
+
+		
+	$(document).ready(function() {
+	
+	
+		
+		
+		$('#formLogin').validate({
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				password: {
+					required: true,
+					minlength: 6
+				}
+			}
+		});
+	
+	
+		$('#inputPassword').hideShowPassword({
+			show: false,
+			innerToggle: 'focus',
+			states: {
+				shown: {
+				  toggle: {
+					content: 'Sakrij'
+				  }
+				},
+				hidden: {
+				  toggle: {
+					content: 'Prikaži'
+				  }
+				}
+		  }
+		});
+		
+		
+		
+	
+	});
+
+	</script>
+
+{% endblock %}

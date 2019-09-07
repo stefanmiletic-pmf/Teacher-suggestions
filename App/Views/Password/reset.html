@@ -1,0 +1,81 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Promeni šifru.{% endblock %}
+
+{% block footer %}
+	{{ parent() }}
+
+    <script src="/js/commons/libs/hideShowPassword.min.js"></script>
+
+    <script>
+		
+	
+        $(document).ready(function() {
+
+            /**
+             * Validate the form
+             */
+            $('#formPassword').validate({
+                rules: {
+                    password: {
+                        required: true,
+                        minlength: 6
+                    }
+                }
+            });
+
+
+            /**
+              * Show password toggle button
+              */
+            $('#inputPassword').hideShowPassword({
+                show: false,
+                innerToggle: 'focus',
+				states: {
+					shown: {
+					  toggle: {
+						content: 'Sakrij'
+					  }
+					},
+					hidden: {
+					  toggle: {
+						content: 'Prikaži'
+					  }
+					}
+			  }
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+	
+    <h1>Promeni sifru.</h1>
+
+    {% if user.errors is not empty %}
+        <p>Obrati paznju na:</p>
+        <ul>
+            {% for error in user.errors %}
+                <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    <form method="post" id="formPassword" action="/password/reset-password">
+		
+		<input type="hidden" name="token" value="{{ token }}" />
+
+        <div class="form-group">
+            <label for="inputPassword">Nova šifra</label>
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Promeni</button>
+		<a href="/login" style="vertical-align: bottom;">Odustani</a>
+
+    </form>
+
+{% endblock %}

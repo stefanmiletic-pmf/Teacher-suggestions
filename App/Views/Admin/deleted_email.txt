@@ -1,0 +1,2 @@
+Izbrisan ti je nalog.
+Izbrisan si iz sledecih razloga: {{ reason }}

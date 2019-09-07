@@ -1,0 +1,86 @@
+{% block body %}
+
+
+		<div class="form-group  d-flex justify-content-center ">
+			<span class="img-div d-flex justify-content-center">
+			  <div class="text-center img-placeholder"  onClick="triggerClick()">
+				<h4>Nova slika</h4>
+			  </div>
+			  <img src="\images\{% if user.profile_image_path %}{{user.profile_image_path}}{% else %}profiledefault.png{% endif %}" onClick="triggerClick()" id="profileDisplay">
+				
+			</span>
+			<input type="file" name="profileImage" onChange="displayImage(this)" id="profileImage" class="form-control" style="display: none;">
+			
+			
+		</div>
+		
+		<div class="form-group">
+			<label for="inputName">Ime</label>
+			<input id="inputName" name="name" placeholder="Ime" autofocus value="{{ user.name }}" required class="form-control"/>
+		</div>
+		
+		<div class="form-group">
+			<label for="inputFullName">Puno ime</label>
+			<input id="inputFullName" name="fullName" placeholder="Puno ime" autofocus value="{{ user.fullName }}" required class="form-control"/>
+		</div>
+		
+		<div class="form-group">
+			<label for="inputEmail">Mejl</label>
+			<input id="inputEmail" name="email" placeholder="Mejl" value="{{ user.email }}" required type="email"  class="form-control"/>
+		</div>
+		
+		
+		
+		<div class="form-group">
+			<label for="inputPassword">Šifra</label>
+			<input type="password" id="inputPassword" name="password" placeholder="Šifra" {% if not edit_profile_page %}required{%endif%} class="form-control" aria-describedby="helpBlock" class="form-control" />
+			{% if edit_profile_page %}
+			<span id="helpBlock" class="help-block">Ostavi prazno za istu šifru</span>
+			{% endif %}
+		</div>
+		
+		
+		
+		<div class="form-group">
+			<label for="formControlSelect1">Departman</label>
+			<select value="{{ user.department_id }}" name="department_id" class="form-control" id="formControlSelect1">
+				{% for department in departments %}
+					<option value="{{department.id}}" {% if department.id == user.department_id %}selected {% endif %}>{{department.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+	  
+
+		<div class="form-group">
+			<label for="cabinetName">Kabinet</label>
+			<input id="cabinetName" name="cabinetName" placeholder="Kabinet" autofocus value="{{ user.cabinetName }}" required class="form-control"/>
+		</div>
+		
+		
+		
+	  
+{% endblock %}
+
+{% block footer %}
+
+	
+	<script>
+	
+		function triggerClick(e) {
+		  document.querySelector('#profileImage').click();
+		}
+		
+		function displayImage(e) {
+		  if (e.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e){
+			  document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+			}
+			reader.readAsDataURL(e.files[0]);
+		  }
+		}
+			
+	</script>
+
+{% endblock %}
+

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% set user = user %}
+
+{% block title %}Početna{% endblock %}
+
+{% block body %}
+
+    <h1>Pozdrav.</h1>
+		 
+	<span class="first-letter-upper-case  badge badge-primary text-wrap">{{ user.fullName }}</span>
+		 
+		 
+		 <img class='rounded-circle' width='45' src="/images/{{user.profile_image_path}}" alt="profile_img">
+					
+		 <center><h5 style="    color: #2c87be;"> Uoči razliku </h5><center>
+		 <div class="row-images-showcase"> 
+		  <div class="column-images-showcase">
+			<img id="pic1" class="pic1" src="/images/pic1.jpg">
+		  </div>
+		  <div class="column-images-showcase">
+			<img id="pic1" class="pic1" src="/images/pic1.jpg">
+		  </div>
+		  <div class="column-images-showcase">
+			<img id="pic1" class="pic1" src="/images/pic1.jpg">
+		  </div>
+		  <div class="column-images-showcase">
+			<img id="pic1" class="pic1" src="/images/pic1.jpg">
+		  </div>
+		</div>
+		
+		
+	
+{% block footer %}
+
+	{{ parent() }}
+	
+		<script src="/js/commons/libs/jquery-3.4.1.min.js"></script>
+		<script>
+		
+		
+			
+				
+				
+			$('#home').addClass('header_tab_active');
+			
+			var blurPropValue = 2;
+			var blurProp = "blur(" + blurPropValue + "px)"
+	  
+			$canvas = $(".row-images-showcase");
+			
+				$canvas
+					.css({
+					   'filter'         : blurProp,
+					   '-webkit-filter' : blurProp,
+					   '-moz-filter'    : blurProp,
+					   '-o-filter'      : blurProp,
+					   '-ms-filter'     : blurProp
+					});
+			
+			var counter = 100;
+			var id = setInterval(function() {
+			
+				blurPropValue -= 0.3;
+				blurProp = "blur(" + blurPropValue + "px)"
+				
+				
+				$canvas
+					.css({
+					   'filter'         : blurProp,
+					   '-webkit-filter' : blurProp,
+					   '-moz-filter'    : blurProp,
+					   '-o-filter'      : blurProp,
+					   '-ms-filter'     : blurProp
+					});
+				
+			
+				if (blurPropValue == 0 )
+					clearInterval(id);
+			
+			}, 200);
+					
+				
+		
+		</script>
+
+{% endblock %}
+		 
+	
+		 
+	
+	
+	
+	
+{% endblock %}

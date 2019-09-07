@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+   <h1>Profil</h1>
+		
+		{% if user.errors is not empty %}
+	
+			<p>Obrati paznju na:</p>
+			<ul>
+			
+				{% for error in user.errors %}
+					<li class="error">{{ error }}</li>
+				{% endfor %}
+			
+			</ul>
+		
+		{% endif %}
+		
+	
+		<form method='post' action="/profile/update" id="formProfile"  enctype="multipart/form-data">
+			
+			
+			{% include '/profile/profileinfo.html' with {'user': user, 'departments': departments, 'edit_profile_page': true} %}
+					
+					
+			<button type="submit" class="btn btn-primary">Sacuvaj</button>
+			<a href="/" style="line-height: 3rem;">Odustani</a>
+
+	
+		</form>
+		<br>
+		
+
+{% endblock %}
+
+
+{% block footer %}
+
+	
+    {{ parent() }}
+
+	<script src="/js/commons/libs/hideShowPassword.min.js"></script>
+
+	<script>
+
+			$('#profile').addClass('header_tab_active');
+		  $(document).ready(function() {
+			
+			
+			
+			var userId = '{{ user.id }}';
+
+            /**
+             * Validate the form
+             */
+            $('#formProfile').validate({
+                rules: {
+                    name: 'required',
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: '/account/validate-email',
+                            data: {
+                                ignore_id: function() {
+                                    return userId;
+                                }
+                            }
+                        }
+                    },
+                    password: {
+                        // required: true,
+                        minlength: 6
+						
+                    }
+                }
+				
+            });
+
+
+            /**
+              * Show password toggle button
+              */
+            $('#inputPassword').hideShowPassword({
+                show: false,
+                innerToggle: 'focus',
+				states: {
+					shown: {
+					  toggle: {
+						content: 'Sakrij'
+					  }
+					},
+					hidden: {
+					  toggle: {
+						content: 'Prikaži'
+					  }
+					}
+			  }
+            });
+        });
+
+	</script>
+
+{% endblock %}
+

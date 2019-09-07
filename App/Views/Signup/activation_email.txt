@@ -1,0 +1,5 @@
+﻿Aktiviranje naloga.
+
+Hvala. Sledeći korak aktivacija putem sledećeg linka:
+
+{{ url }}

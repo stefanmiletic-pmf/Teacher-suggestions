@@ -1,0 +1,414 @@
+{% extends "base.html" %}
+{% set user = user %}
+
+{% block head %}
+	{{ parent() }}
+	
+	<link rel="stylesheet" href="/css/Chart.min.css"/>
+
+{% endblock %}
+
+{% block title %}Admin panel{% endblock %}
+
+
+
+{% block body %}
+
+	<div class="debug"> </div>
+	
+	<div aria-live="polite" aria-atomic="true" style="position: absolute; top:0; right:0; min-height: 200px;" >
+	  <!-- Position it -->
+	  <div style="z-index:10; position: fixed; top: 0; right: 0;" id="notification-div">
+
+		<!-- Then put toasts within -->
+		
+		</div>
+		
+	</div>	
+	
+	
+	<div class="card tab-div" id="tabs">
+                    <div class="card-header tab-header-div">
+                        <ul class="nav nav-tabs card-header-tabs" id="tabSelection" role="tablist">
+							
+							<li class='nav-item'>
+								<a class='nav-link user-table-tab-anchor' data-toggle='tab' href="#users-tab" role='tab' aria-controls='users-table' aria-selected='true'> Korisnici </a>
+							</li>
+							
+							
+							<li class='nav-item'>
+								<a class='nav-link statistics-tab-anchor' data-toggle='tab' href="#statistics-tab" role='tab' aria-controls='statistics'> Statistika </a>
+							</li>
+							
+                        </ul>
+                    </div>
+					
+					
+					<div id="users-tab">
+					
+						<div id="admin-search-panel" class="container">
+							<div class="row" id="filter">
+								<form>
+									<div class="form-group col-sm-3 col-xs-6">
+										<select data-filter="department_id" class="filter-department filter form-control">
+											<option value="" >Departman</option>
+											<option value="">Svi departmani</option>
+											{% for department in departments %}
+												<option value="{{department.id}}">{{department.name}}</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="form-group col-sm-3 col-xs-6">
+										<select data-filter="cabinetName" class="filter-cabinet filter form-control">
+											<option value="" >Kabinet</option>
+											<option value="" >Svi kabineti</option>
+											{% for cabinet in cabinets %}
+												<option value="{{cabinet.cabinetName}}">{{cabinet.cabinetName}}</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="form-group col-sm-3 col-xs-6">
+										<select data-filter="status" class="filter-status filter form-control">
+											<option value="">Status</option>
+											<option value="">Svi</option>
+											<option value="1">Aktivan</option>
+											<option value="0">Neaktivan</option>
+										</select>
+									</div>
+									
+									<div class="form-group col-xs-9">
+										<input data-filter="fullName" name="search-name" class="filter-name filter form-control" type="text" placeholder="Pretraži" />
+									</div>
+									
+								</form>
+							</div>
+						</div>
+						
+						<div id="users-panel" class="container">
+							<div class="table-wrapper">
+								<div class="table-title">
+									<div class="row">
+										<div class="col-sm-5">
+											<h2>Upravljanje <b>korisnicima</b></h2>
+										</div>
+										<div class="col-sm-7" >
+											<a href="#" id="pdf-export" class="btn btn-primary"><i class="fas fa-file-pdf"></i> <span>Pdf izveštaj</span></a>		
+											<a href="#" id="excel-export" class="btn btn-primary"><i class="fas fa-file-excel"></i> <span>Excel izveštaj</span></a>						
+										</div>
+									</div>
+								</div>
+								<table id="user-table" class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th data-value="yes" value="fullName" data-filter="orderFullName" class="filter filter-fullName">Puno ime</th>	
+											<th data-value="yes" data-filter="orderEmail" class="filter filter-email">Mejl</th>						
+											<th data-value="yes" data-filter="orderCreatedAt" class="filter filter-created-at">Datum kreiranja</th>
+											<th data-value="yes" data-filter="orderIs_active" class="filter filter-status">Status</th>
+											<th data-value="yes" data-filter="orderDepartment_id" class="filter filter-department">Departman</th>
+											<th data-value="yes" data-filter="orderCabinetName" class="filter filter-cabinet">Kabinet</th>
+										</tr>
+									</thead>
+									<tbody id="user-list">
+									
+									</tbody>
+								</table>
+								
+								<div id="users-counter"> </div>
+								
+								
+								
+							</div>
+						</div> 
+
+
+					
+					</div>
+			
+
+
+					<div id="statistics-tab">
+					
+						<canvas id="myChart"></canvas>
+						
+					</div>
+			
+	</div>
+
+
+	
+
+{% endblock %}
+
+{% block footer %}
+
+	{{ parent() }}
+
+    <script src="/js/commons/Helpers/Toast.js"></script>
+	
+    <script src="/js/commons/Models/Error.js"></script>
+    <script src="/js/commons/Helpers/Pagination.js"></script>
+
+	<script src="/js/admin/Models/App.js" > </script>
+	<script src="/js/commons/Models/Notification.js" > </script>
+	
+	<script src="/js/admin/Helpers/UserBuilder.js" > </script>
+	<script src="/js/admin/Helpers/UserUpdater.js" > </script>
+	
+	<script src="/js/admin/Models/UserPanel.js" > </script>
+
+
+
+    <script src="/js/commons/libs/jquery-ui.min.js"></script>
+    <script src="/js/commons/libs/Chart.min.js"></script>
+	
+	
+	<script>
+	
+		
+		$('#admin_panel').addClass('header_tab_active');
+		
+		
+		
+		
+		
+		
+		$(document).ready(function(){
+		
+		
+			$( "#tabs" ).tabs();
+			
+			$(".user-table-tab-anchor").click();
+				
+				
+			$('[data-toggle="tooltip"]').tooltip();
+			
+			var filtersObject = {};
+			
+			
+			
+			// static 
+			// addPaginationHeaderCallback(dom) {
+				
+				// var div = document.getElementsByClassName('post-to-send')[0];
+				// div.parentNode.insertBefore(dom, div.nextSibling);
+							
+
+			// }
+			
+			// static 
+			// addPaginationFooterCallback(dom) {
+				
+				
+				
+				// var div = document.getElementById('tab-publish');
+				// div.appendChild(dom);
+
+			// }
+			
+					
+			// callback for who to add new feed
+			var addCallback = function(user) {
+				
+				UserPanel.add(UserBuilder.director(user).build());
+				
+			}
+			
+			
+			
+			
+			// callback for what happens when page in pagination clicked
+			var onClickCallback = function() {
+			
+				UserUpdater.fetchUsersPage(this.getAttribute('data-href'), filtersObject, addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+
+			}
+			
+			
+			
+			// action: fetch feeds
+			UserUpdater.fetchUsersPage('/Admin/show-users-page?page=1',  null, addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+		
+		
+		
+			var filterAction = function() {
+			
+			//console.log("FILTER");
+				var filterName = $(this).data("filter"),
+					filterVal = $(this).val();
+				
+				if ( filterVal == "" ) {
+				
+				
+					if( filtersObject[filterName] ) {
+					
+						
+					
+						$(this).removeClass("filter-active");
+					}else if ( $(this).data("value") != "" ) {
+					
+						$(this).addClass("filter-active");
+					
+						filterVal = $(this).data("value");
+					
+					} 
+					
+					
+					
+					
+				
+				}
+			
+				//console.log("BEFORE");
+				//console.log(filtersObject);
+				
+				if ( filterName === "fullName") {
+				
+					filtersObject[filterName] = filterVal;
+				} else {
+						if (filterVal === "" && filtersObject[filterName]) {
+						
+								delete filtersObject[filterName];
+						} else {
+							filtersObject[filterName] = filterVal;
+						}
+				}
+				
+				
+				
+				//console.log("AFTER");
+				//console.log(filtersObject);
+				UserUpdater.fetchUsersPage('/Admin/show-users-page?page=1', filtersObject, addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+				
+				
+			}
+		
+		
+			$('.filter-name').on("keyup", filterAction);
+			$("select.filter").on("change", filterAction);
+			$("th.filter").on("click", filterAction);
+
+
+			
+			//on search form submit
+			$("#search-form").submit(function(e) {
+				e.preventDefault();
+				var query = $("#search-form input").val().toLowerCase();
+
+				
+				var department = $(this).data("department").toLowerCase(),
+						cabinet = $(this).data("cabinet").toLowerCase(),
+						status = $(this).data("status").toLowerCase();
+
+					
+			});
+			
+			$("#excel-export").click(function() {
+				UserUpdater.exportTable("/Admin/export-excel", "xls");	
+			});
+			
+			
+			$("#pdf-export").click(function() {
+				UserUpdater.exportTable("/Admin/export-pdf", "pdf");	
+			});
+			
+			$(".statistics-tab-anchor").click(function() {
+			
+				var onSuccessCallback = function(json) {
+				
+					json = json['departments']
+				
+					var labels = [];
+					var data = [];
+					
+					var bgColor =[];
+					var borderColor =[];
+					var blue = 255;
+					var green = 162;
+					
+					
+					for ( var i = 0; i < json.length; ++i ) {
+					
+						var item = json[i];
+						//console.log(item);
+					
+						var templateBgColor = 'rgba(54, ' + green+ ', ' + blue +  ' , 0.2)';
+						var templateBorderColor = 'rgba(54, ' + green+ ' , ' + blue +  ' , 1)';
+						blue -= 50;
+						
+						if ( blue < 0 ) {
+						
+							blue = 255;
+							green -=100;
+						
+						}
+						
+						labels.push(item["name"]);
+						data.push(parseInt(item["dep_count"]));
+						bgColor.push(templateBgColor);
+						borderColor.push(templateBorderColor);
+					
+					}
+					
+					//console.log(labels);
+					//console.log(data);
+					//console.log(bgColor);
+					//console.log(borderColor);
+				
+				
+					var oldCanvas = document.getElementById('myChart');
+					oldCanvas.parentNode.removeChild(oldCanvas);
+					
+					var canvas = document.createElement('canvas');
+					canvas.id = "myChart";
+					
+					
+					var statisticsTab = document.getElementById('statistics-tab');
+					statisticsTab.appendChild(canvas);
+						
+						
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: labels,
+							datasets: [{
+								label: '# broj korisnika',
+								data,
+								backgroundColor: bgColor,
+								borderColor: borderColor,
+								borderWidth: 1
+							}]
+						},
+						options: {
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
+									}
+								}]
+							}
+						}
+					});
+		
+				
+				}
+				
+				
+				
+				UserUpdater.fetchDepartmentsGroupBy(onSuccessCallback);
+			
+			
+			});
+			
+			
+		});
+		
+		
+		
+
+		
+	
+	</script>
+
+{% endblock %}

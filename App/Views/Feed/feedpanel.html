@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+{% set user = user %}
+
+{% block title %}Predlozi{% endblock %}
+
+{% block body %}
+
+	<div class="debug"> </div>
+	
+	
+	
+	
+	<div aria-live="polite" aria-atomic="true" style="position: absolute; top:0; right:0; min-height: 200px;z-index: 100;" >
+	  <!-- Position it -->
+	  <div style="z-index:10; position: fixed; top: 0; right: 0;" id="notification-div">
+
+		<!-- Then put toasts within -->
+		
+		</div>
+		
+	</div>					
+	<nav class="navbar navbar-light bg-white">
+			<a href="javascript:void(0)" class="navbar-brand  text-muted">Predlozi</a>
+			<form class="form-inline">
+				<div class="input-group">
+				<div class="input-group-append" id="button-search-div">
+						<button class="btn btn-outline-primary" type="button" id="button-search">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+					<input placeholder="nastavnik" id="user-search" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-search">
+					
+				</div>
+			</form>
+		</nav>
+
+
+   <div class="container-fluid user-about">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h5">{{ user.name }}</div>
+						<div class="profile-image">
+							<img class='rounded-circle' width='45' src='/images/{{user.profile_image_path}}' alt=''>
+							
+						</div>
+                        <div class="h7 text-muted">Adresa : {{ user.email }}</div>
+                        <div class="h7">Departman: {{ user.department }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			
+			<div class="col-md-6 feeds-main">
+
+
+				<div id="copy-link-panel"> 
+	
+				
+					<label for="urlField"> Link do objave </label>	<button type='button' class='close copy-panel-close' aria-label='Close'>  <span aria-hidden='true'>&times;</span></button>
+					<input class="url form-control " type="text" name="urlField">
+				
+				</div>
+				<button class="btn btn-primary" id="refresh_feeds"> Osveži predloge </button>
+
+                <!--- \\\\\\\Post-->
+                <div class="card tab-div" id="tabs">
+                    <div class="card-header tab-header-div">
+                        <ul class="nav nav-tabs card-header-tabs" id="tabSelection" role="tablist">
+							
+							<li class='nav-item post-tab'>
+								<a class='nav-link post-tab-anchor' id='posts-tab' data-toggle='tab' href="#tab-publish" role='tab' aria-controls='posts' aria-selected='true'> Predlozi </a>
+							</li>
+							
+							
+                        </ul>
+                    </div>
+					
+                    <div id="tab-publish" class=" tab-body-div">
+						
+					
+					
+						<form class='post-to-send card-body'>
+							<div class='tab-content'>
+								<div class='tab-pane fade show active' id='posts' role='tabpanel' aria-labelledby='posts-tab'>
+									<div class='form-group'>
+										<label class='sr-only' for='message'>title</label>
+										<input class='form-control post-title' id='title' placeholder='Naslov?' />
+										<label class='sr-only' for='message'>text</label>
+										<textarea class='form-control post-textarea' id='publish-message-body' rows='3' placeholder='Predlog?'></textarea>
+									</div>
+								</div>
+							</div>
+							<div class='btn-toolbar justify-content-between'>
+								<div class='btn-group'>
+									<button type='submit' class='btn btn-primary' id="publish-button">Predloži <i style="color: #9cd6f9;" class="far fa-lightbulb"></i></button>
+								</div>
+							</div>
+						</form>
+						
+						
+						
+						<!-- Post /////-->
+						<div class="feeds-view">
+						
+						</div>
+						
+						
+			  
+					
+					
+                    </div>
+					
+                </div>
+				
+				
+				
+
+
+            </div>
+			
+			
+			 <div class="col-md-3">
+                <div class="card user-card">
+                    <div class="card-body">
+                        <img src="/images/pmf-logo.jpg" class="img-fluid" alt="pmf-logo">
+                    </div>
+                </div>
+            </div>
+			
+			
+		</div>	
+	</div>
+	
+	
+	
+    <!-- <script src="/js/jquery-3.4.1.min.js"></script> -->
+    <!-- <script src="/js/sockets/models/Message.js"></script> -->
+    <!-- <script src="/js/sockets/models/User.js"></script> -->
+    <!-- <script src="/js/sockets/controllers/MessageController.js"></script> -->
+    <!-- <script src="/js/sockets/controllers/UserController.js"></script> -->
+    <!-- <script src="/js/sockets/WebSocketRequest.js"></script> -->
+    <!-- <script src="/js/sockets/WebSocketConnection.js"></script> -->
+    <!-- <script> -->
+	
+			
+	
+        <!-- WebSocketConnection.start('ws://localhost:2593'); -->
+		
+			
+			<!-- var cookies = document.cookie.toString(); -->
+			
+			<!-- var start = document.cookie.indexOf("PHPSESSID=") + "PHPSESSID=".length; -->
+			
+			<!-- var new_document_cookie =  document.cookie.substring(start); -->
+			
+			<!-- start = 0; -->
+			<!-- var end = new_document_cookie.indexOf(";"); -->
+			
+			
+			<!-- var PHPSESSID = new_document_cookie.substring(start, end) -->
+		
+            <!-- $(document).keypress(function(e) { -->
+                <!-- if(e.which == 13) { -->
+                    <!-- e.preventDefault(); -->
+					<!-- WebSocketRequest.sendToServer('command', 'decode', {message:   "/session " + PHPSESSID}) -->
+                <!-- } -->
+			<!-- }); -->
+		
+		
+       
+    <!-- </script> -->
+	
+	
+	
+	<!-- <script src="/js/dom-to-json-vv.js"></script> -->
+	
+	<!-- <script type="module" src="/js/feed/Main.js"></script> -->
+	
+
+{% endblock %}
+
+	
+{% block footer %}
+
+	{{ parent() }}
+
+    <script src="/js/feed-tabs/Models/UserConfiguration.js"></script>
+	<script type="text/javascript">
+		
+				
+		UserConfiguration.cabinet = "{{ user.cabinet }}";					
+		UserConfiguration.department = "{{ user.faculty }}";
+		UserConfiguration.fullName = "{{ user.fullName }}";
+		UserConfiguration.id = "{{ user.id }}";
+		UserConfiguration.name = "{{ user.name }}";
+		UserConfiguration.profile_image_path = "{{ user.profile_image_path }}";
+	
+		
+	
+		
+		
+		
+		
+		
+		
+		
+	
+	</script>
+	
+	
+	
+    <script src="/js/feed-tabs/Models/App.js"></script>
+    <script src="/js/feed-tabs/Models/Tab.js"></script>
+    <script src="/js/feed-tabs/Helpers/TabUpdater.js"></script>
+    <script src="/js/commons/Helpers/Pagination.js"></script>
+    <script src="/js/feed-tabs/Helpers/FeedWindowBuilder.js"></script>
+    <script src="/js/feed-tabs/Helpers/FeedUpdater.js"></script>
+    <script src="/js/commons/Helpers/Toast.js"></script>
+	
+
+    <script src="/js/feed-tabs/Models/User.js"></script>
+    <script src="/js/commons/Models/Notification.js"></script>
+	<script src="/js/commons/Models/Error.js"></script>
+	
+	
+    <script src="/js/feed-tabs/Controllers/NotificationController.js"></script>
+    <script src="/js/feed-tabs/Controllers/PublishController.js"></script>
+    <script src="/js/feed-tabs/Controllers/UserController.js"></script>
+	
+	
+    <script src="/js/feed-tabs/sockets/WebSocketRequest.js"></script>
+    <script src="/js/feed-tabs/sockets/WebSocketConnection.js"></script>
+	
+	<script src="/js/feed-tabs/Models/Publish.js"></script>
+	
+	
+	
+
+    <script src="/js/commons/libs/jquery-ui.min.js"></script>
+	
+	
+    <script src="/js/commons/Helpers/paginatedAutocomplete.js"></script>
+	
+	<script type="text/javascript">
+		
+		
+		//NotificationController.actionNewFeed({"createdAt":1565026866,"title":"fw","body":"ww"})
+		
+		WebSocketConnection.start('ws://localhost:2593?auth=' + User.getSessionId());
+		$('#suggestions').addClass('header_tab_active');
+			
+		
+		//$('.toast').toast('show');
+		
+		
+		
+	
+			
+			
+			  
+			  
+			  
+			$(document).ready(function () {
+			
+			
+				$( "#tabs" ).tabs();
+				$("#posts-tab").click();
+				
+				$(".copy-panel-close").click(function() {
+					$('#copy-link-panel').css("display", "none");
+				});
+			
+			
+			
+			
+				var url_string = window.location.href; //window.location.href
+				
+				var url = new URL(url_string);
+				var c = url.searchParams.get("feedId");
+				if ( c ) {
+					TabUpdater.fetchTab(parseInt(c));
+				}
+				
+				
+				
+				
+			
+				$("#refresh_feeds").click(function() {
+					this.style.display = "none";
+					FeedUpdater.fetchFeedsPage('/FeedProvider/show-feeds-page?page=1', addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+				});
+			
+			
+			
+			$("#user-search").paginatedAutocomplete();
+			
+			$("#user-search").click(function(e) {
+			
+				e.preventDefault();
+				e.stopPropagation();
+			
+			});
+				// init autocomplete search
+				
+			
+			
+			
+				// init publish-button
+				$('#publish-button').click(function(e) {
+				
+						e.preventDefault();
+						Publish.submit();
+					
+				
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+				var addCallback = function(feed) {
+					Publish.add(feed);
+				}
+				
+				
+				
+				var onClickCallback = function() {
+					FeedUpdater.fetchFeedsPage(this.getAttribute('data-href'), addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+				}
+				
+				
+				FeedUpdater.fetchFeedsPage('/FeedProvider/show-feeds-page?page=1', addCallback, App.addPaginationHeaderCallback, App.addPaginationFooterCallback, onClickCallback);
+				
+				
+				
+				
+			});
+
+	</script>
+	
+
+
+{% endblock %}
+
