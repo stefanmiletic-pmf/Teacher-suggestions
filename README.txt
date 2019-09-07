@@ -1,3 +1,11 @@
+Video specifikacija:
+Video specification:
+https://www.youtube.com/watch?v=3RmUDs5ip_4
+
+Pdf specifikacija:
+Pdf specification:
+Nastavnicki predlozi.pdf
+
 Instalacija:
 Installation:
 
