@@ -34,7 +34,7 @@ sa putanjom to public foldera: \path\to\MS94PROJEKAT\public
 -------------------------------
 
 
-hint: (C:\wamp64\bin\mysql\mysql5.7.24\bin)
+	hint: (C:\wamp64\bin\mysql\mysql5.7.24\bin)
 3. Pokrenuti komandu  mysql -h localhost -u root -p  nastavnicki_predlozi < databaseSetup.sql
 
 	Init database.
