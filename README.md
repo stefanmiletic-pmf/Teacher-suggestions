@@ -1,22 +1,19 @@
 php7, mvc, oop, mysql, javascript, composer, export-to-excel, export-to-pdf, phpmailer
 ratcher-php-server, twig, bootstrap, jquery, hideShowPassword
 
-Video specifikacija:
-Video specification:
+# Video specifikacija - Video specification:
 https://www.youtube.com/watch?v=3RmUDs5ip_4
 
-Pdf specifikacija:
-Pdf specification:
+# Pdf specifikacija - Pdf specification:
 Nastavnicki predlozi.pdf
 
-Instalacija:
-Installation:
+# Instalacija - Installation:
 
-Testirano na WAMP serveru:
-Tested on:
-Apache/2.4.37 (Win64) 
-PHP/7.2.14 - Port defined for Apache: 80
-MySQL/5.7.24
+Testirano na WAMP serveru - Tested on WAMP server:
+
+Apache/2.4.37 (Win64) <br />
+PHP/7.2.14 - Port defined for Apache: 80 <br />
+MySQL/5.7.24 <br />
 
 -------------------------------
 
