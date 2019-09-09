@@ -1,5 +1,5 @@
-php7, mvc, oop, mysql, javascript, composer, export-to-excel, export-to-pdf, phpmailer
-ratcher-php-server, twig, bootstrap, jquery, hideShowPassword
+**php7, mvc, oop, mysql, javascript, composer, export-to-excel, export-to-pdf, phpmailer
+ratcher-php-server, twig, bootstrap, jquery, hideShowPassword**
 
 # Video specifikacija - Video specification:
 https://www.youtube.com/watch?v=3RmUDs5ip_4
