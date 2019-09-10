@@ -1,13 +1,24 @@
 **php7, mvc, oop, mysql, javascript, composer, export-to-excel, export-to-pdf, phpmailer
 ratcher-php-server, twig, bootstrap, jquery, hideShowPassword**
 
-# Video specifikacija - Video specification:
+# Table of Contents
+1. [Ukratko - Summary](#sec1)
+2. [Video specifikacija - Video specification](#sec2)
+3. [Pdf specifikacija - Pdf specification](#sec3)
+4. [Instalacija - Installation](#sec4)
+
+## Ukratko - Summary <a name="sec1"></a>
+Ova platforma omogućava objavljivanje predloga nastavnika jedne obrazovno-vaspitne ustanove.
+
+This platform gives teachers from one institution option to share their suggestions with other among same institution.
+
+## Video specifikacija - Video specification <a name="sec2"></a>
 https://www.youtube.com/watch?v=3RmUDs5ip_4
 
-# Pdf specifikacija - Pdf specification:
+## Pdf specifikacija - Pdf specification <a name="sec3"></a>
 Nastavnicki predlozi.pdf
 
-# Instalacija - Installation:
+## Instalacija - Installation <a name="sec4"></a>
 
 Testirano na WAMP serveru - Tested on WAMP server:
 
