@@ -1,7 +1,7 @@
 **php7, mvc, oop, mysql, javascript, composer, export-to-excel, export-to-pdf, phpmailer
 ratcher-php-server, twig, bootstrap, jquery, hideShowPassword**
 
-# Table of Contents
+# Sadžaj - Table of Contents
 1. [Ukratko - Summary](#sec1)
 2. [Video specifikacija - Video specification](#sec2)
 3. [Pdf specifikacija - Pdf specification](#sec3)
